@@ -71,6 +71,11 @@ class _GroupNorm(_BatchNorm):
             self.training or not self.track_running_stats, self.momentum, self.eps)
 
 
+class GroupNorm1D(_GroupNorm):
+    def _check_input_dim(self, input):
+        if input.dim() != 2:
+            raise ValueError('expected 4D input (got {}D input)'
+                             .format(input.dim()))
 class GroupNorm2d(_GroupNorm):
     r"""Applies Group Normalization over a 4D input (a mini-batch of 2D inputs
     with additional channel dimension) as described in the paper
